@@ -10,6 +10,7 @@ import br.aedu.anhanghera.poo.locadora.carro.dominio.Funcionario;
 import br.aedu.anhanghera.poo.locadora.carro.dominio.Carro;
 import br.aedu.anhanghera.poo.locadora.carro.excecao.LoginException;
 import br.aedu.anhanghera.poo.locadora.carro.excecao.ReservarCarroException;
+import java.util.List;
 
 public class LocadoraCarroNegocio {
 
@@ -44,9 +45,12 @@ public class LocadoraCarroNegocio {
     }
 
     public void popularCarros() throws Exception {
-        for (int i = 0; i < 500; i++) {
-            Carro l = new Carro("Carro " + i, "4P");
-            CarroDAO.inserir(l);
+        List<Carro> carros = CarroDAO.listar();
+        if(carros.isEmpty()){
+            for (int i = 0; i < 500; i++) {
+                Carro l = new Carro("Carro " + i, "4P");
+                CarroDAO.inserir(l);
+            }
         }
     }
 

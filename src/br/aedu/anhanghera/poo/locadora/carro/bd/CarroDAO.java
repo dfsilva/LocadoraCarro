@@ -6,6 +6,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 public class CarroDAO {
@@ -48,6 +52,45 @@ public class CarroDAO {
             stm.close();
         }
         return carro;
+    }
+    
+    
+    public static List<Carro> listar(){
+        
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        Connection con = null;
+        List<Carro> retorno = new ArrayList<Carro>();
+        
+        try {
+           
+            con = FabricaConexao.getConnection();
+            stm = con.prepareStatement("select * from carro");
+            rs = stm.executeQuery();
+            
+            while(rs.next()){
+                Carro c = new Carro();
+                c.setId(rs.getInt("id"));
+                c.setNome(rs.getString("nome"));
+                c.setModelo(rs.getString("modelo"));
+                retorno.add(c);
+            }
+            
+        } catch (Exception e) {
+           e.printStackTrace();
+        }finally{
+                try {
+                    if(rs != null)
+                        rs.close();
+                    
+                    if(stm != null)
+                        stm.close();
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
+        }
+        
+        return retorno;
     }
     
     
