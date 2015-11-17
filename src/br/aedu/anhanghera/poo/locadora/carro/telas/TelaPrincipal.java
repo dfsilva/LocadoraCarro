@@ -9,6 +9,8 @@ import br.aedu.anhanghera.poo.locadora.carro.bd.CarroDAO;
 import br.aedu.anhanghera.poo.locadora.carro.dominio.Carro;
 import br.aedu.anhanghera.poo.locadora.carro.telas.modelo.CarrosTableModel;
 import java.util.List;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 /**
  *
@@ -96,10 +98,32 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_exitMenuItemActionPerformed
 
     private void miCarroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miCarroActionPerformed
-        FrameCarros frameCarros = new FrameCarros();
+        final FrameCarros frameCarros = new FrameCarros();
         List<Carro> carros = CarroDAO.listar();
         CarrosTableModel tableModel = new CarrosTableModel(carros);
         frameCarros.jTable1.setModel(tableModel);
+
+        frameCarros.jTable1.getSelectionModel()
+                .addListSelectionListener(new ListSelectionListener() {
+
+                    @Override
+                    public void valueChanged(ListSelectionEvent e) {
+
+                        if (frameCarros.jTable1.getSelectedRow() >= 0) {
+                            
+                            CarrosTableModel model
+                            = (CarrosTableModel) frameCarros.jTable1.getModel();
+
+                            Carro carro = model.getValueAt(frameCarros.jTable1.getSelectedRow());
+
+                            frameCarros.txCodigo.setText(String.valueOf(carro.getId()));
+                            frameCarros.txNome.setText(carro.getNome());
+                            frameCarros.txModelo.setText(carro.getModelo());
+
+                        }
+                    }
+                });
+
         desktopPane.add(frameCarros);
         frameCarros.setVisible(true);
     }//GEN-LAST:event_miCarroActionPerformed
@@ -131,7 +155,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
         }
         //</editor-fold>
 
-        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

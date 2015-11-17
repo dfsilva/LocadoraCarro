@@ -7,28 +7,26 @@ import java.util.logging.Logger;
 import javax.swing.JFrame;
 
 public class Principal {
-	
-	private static LocadoraCarroNegocio locadoraCarroNegocio = new LocadoraCarroNegocio();
-	
-        private static TelaPrincipal telaPrincipal;
-        
-	public static void main(String[] args) {
-	
-           
-            try {
-                locadoraCarroNegocio.popularCarros();
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
-            
-    
-            java.awt.EventQueue.invokeLater(new Runnable() {
+
+    private static LocadoraCarroNegocio locadoraCarroNegocio = new LocadoraCarroNegocio();
+
+    private static TelaPrincipal telaPrincipal;
+
+    public static void main(String[] args) {
+
+        try {
+            locadoraCarroNegocio.popularCarros();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+        java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-            telaPrincipal = new TelaPrincipal();
-            telaPrincipal.setExtendedState(JFrame.MAXIMIZED_BOTH);
-            telaPrincipal.setVisible(true);
-            }});
-            
-	}
+                telaPrincipal = new TelaPrincipal();
+                telaPrincipal.setVisible(true);
+            }
+        });
+
+    }
 
 }

@@ -15,7 +15,6 @@ import java.util.logging.Logger;
 public class CarroDAO {
     
     
-    
     public static Carro inserir(Carro carro) throws Exception{
         
         //Objeto responsavel por executar o sql no banco de dados
@@ -54,6 +53,33 @@ public class CarroDAO {
         return carro;
     }
     
+    public static int atualizar(Carro carro) throws Exception{
+        
+        //Objeto responsavel por executar o sql no banco de dados
+        PreparedStatement stm = null;
+        //Representa conexao com o banco de dados
+        Connection con = null;
+        
+        try {
+            con = FabricaConexao.getConnection();
+            
+            //Prepara o comendo para execucao no banco de dados.
+            stm = con.prepareStatement
+            ("update carro set nome = ?, modelo = ? "
+                    + " where id = ?");
+            
+            //Atribuindo os parametros na consulta.
+            stm.setString(1, carro.getNome());
+            stm.setString(2, carro.getModelo());
+            stm.setInt(3, carro.getId());
+            
+            return stm.executeUpdate();
+        } catch (Exception e) {
+            throw e;
+        }finally{
+            stm.close();
+        }
+    }
     
     public static List<Carro> listar(){
         

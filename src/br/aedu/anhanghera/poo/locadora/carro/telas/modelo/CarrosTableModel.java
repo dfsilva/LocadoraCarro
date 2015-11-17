@@ -49,4 +49,8 @@ public class CarrosTableModel extends AbstractTableModel{
     public String getColumnName(int column) {
         return colunas[column];
     }
+    
+    public Carro getValueAt(int rowIndex){
+        return carros.get(rowIndex);
+    }
 }
